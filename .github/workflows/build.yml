@@ -1,0 +1,40 @@
+name: Rudra Automated Build Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+env:
+  NEXT_TELEMETRY_DISABLED: 1
+
+jobs:
+  build-and-notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Setup Next.js Build Cache
+        uses: actions/cache@v4
+        with:
+          path: .next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('package-lock.json') }}-
+
+      - name: Fire Success Webhook to Go Backend
+        if: success()
+        run: |
+          curl -X POST https://rudra-backend-z68t.onrender.com/api/webhooks/github-pipeline \
+          -w "\nHTTP Status: %{http_code}\n" \
+          -H "Content-Type: application/json" \
+          -H "x-auth-code: test-auth-code-12345" \
+          -d '{"jobId": "4e641843-f90d-4e89-acce-653877212db1", "appId": "cmq7ijans00022g7kiz9yb7ld", "exportType": "vercel", "repo": "${{ github.repository }}"}'

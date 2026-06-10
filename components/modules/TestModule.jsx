@@ -1,0 +1,40 @@
+"use client";
+
+import React, { useState, useCallback } from 'react';
+import './TestModule.css';
+
+import { SwapPlayground } from '@rudra-studio/rudra-anim';
+import { DinoRunner3D, FloatingShape, ModelViewer } from '@rudra-studio/rudra-three';
+import { Badge } from '@rudra-studio/rudra-core';
+
+export default function TestModule(props) {
+  const [user, set_user] = useState(props.serverData?.user !== undefined ? props.serverData.user : {"age":27,"name":"sivasankar"});
+
+  const newFunction_1 = useCallback(async (args) => {
+    console.log('Executing Client Function: newFunction_1');
+    // Client Step: New library function (library_function)
+  }, []);
+
+  const onLoadFunction = useCallback(async (args) => {
+    console.log('Executing Client Function: onLoadFunction');
+    // Client Step: New declare variable (declare_variable)
+    // Client Step: New return value (return_value)
+  }, []);
+
+  return (
+    <div className="rudra-module-wrapper">
+      <SwapPlayground id="el_1781059609991_gxgkcg9">
+      </SwapPlayground>
+      <DinoRunner3D id="el_1781059615559_7pplb88">
+      </DinoRunner3D>
+      <FloatingShape id="el_1781059618614_iyzugcq" shape="cube">
+      </FloatingShape>
+      <ModelViewer id="el_1781059671238_skzjr75" style={{}} environment="city">
+      </ModelViewer>
+      <Badge id="el_1781062001022_hg1wo3c" size="sm" variant="solid">
+      </Badge>
+      <Badge id="el_1781062038374_8btw0xs" size="sm" variant="solid">
+      </Badge>
+    </div>
+  );
+}

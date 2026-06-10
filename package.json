@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "@rudra-studio/rudra-anim": "latest",
+    "@rudra-studio/rudra-core": "latest",
+    "@rudra-studio/rudra-three": "latest",
+    "next": "16.2.4",
+    "next-themes": "^0.4.6",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "postcss": "^8.4.0",
+    "tailwindcss": "^3.4.0"
+  },
+  "name": "demo-rudra",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "build:docker": "cross-env BUILD_TARGET=docker next build",
+    "build:static": "cross-env BUILD_TARGET=static next build",
+    "dev": "next dev",
+    "start": "next start"
+  },
+  "version": "1.0.0"
+}
